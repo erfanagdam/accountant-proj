@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+
+    {% if error %}
+    {{ error }}
+    {% else %}
+    {% endif %}
+    {% csrf_token %}
+    <form class="" action="{% url 'login' %}" method="POST">
+      <input style="margin:0;display:inline;float:right;" type="text" name="username" value="">
+      </input>
+      <p style="margin:0;display:inline;float:right;"> username </p>
+      <br><br>
+      <input style="margin:0;display:inline;float:right;" type="password" name="password" value="">
+      </input>
+      <p style="margin:0;display:inline;float:right;"> password </p>
+      <br><br><br>
+      <input type="submit" name="submit" value="login">
+      </input>
+    </form>
+  </body>
+</html>
