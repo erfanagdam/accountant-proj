@@ -88,12 +88,20 @@ WSGI_APPLICATION = 'accountant.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    #'default': {
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'NAME': 'fpowptbz',
+        #'USER': 'fpowptbz',
+        #'PASSWORD' : 'kKJZQ2doRZdm34uY4ropIBtvwXJm486k',
+        #'HOST': 'motty.db.elephantsql.com',
+        #'PORT': '5432',
+    #}
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpowptbz',
-        'USER': 'fpowptbz',
-        'PASSWORD' : 'kKJZQ2doRZdm34uY4ropIBtvwXJm486k',
-        'HOST': 'motty.db.elephantsql.com',
+        'NAME': 'accountantproj',
+        'USER': 'postgres',
+        'PASSWORD' : 'erfan1378329',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

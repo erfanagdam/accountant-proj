@@ -6,33 +6,12 @@ from django.core.mail import send_mail
 from django.contrib import auth
 from django.utils.crypto import get_random_string
 from .models import token, exp
-
-# Create your views here.
-
-@csrf_exempt
-def home(request):
-        if request.method == 'POST':
-            t_user = get_object_or_404(User, token__token = request.POST['token'] )
-            #if request.POST['income'] and request.POST['amount']:
-                #income.objects.create(user = t_user, title = request.POST['income'], amount = request.POST['amount'])
-            #elif request.POST['expent'] and request.POST['amount']:
-            exp.objects.create(user = t_user, title = request.POST['expent'], amount = request.POST['amount'])
-            #else:
-            return HttpResponse('erooooooooooooooorrrrrrrrrrr')
-        else:
-            return render(request, 'add.html')
+from django.contrib.auth.decorators import login_required
 
 
+###############################################signup##############################################
 @csrf_exempt
 def signup(request):
-
-#   send_mail(
-#        'Subject here',
-#        'Here is the message.',
-#        'erfan.aliagdam1831@gmail.com',
-#        ['yasiw49043@provamail.com'],
-#        fail_silently=False,
-#    )
     if request.method == 'POST':
         if request.POST['password'] == request.POST['password-retype']:
             try:
@@ -51,9 +30,7 @@ def signup(request):
             return render(request, 'signup.html', {'error' : 'pass match error'})
     else:
         return render(request, 'signup.html')
-
-
-
+###############################################login##############################################
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
@@ -65,3 +42,17 @@ def login(request):
                 return HttpResponse('password failed')
     else:
         return render(request, "login.html")
+#######################################home(ADD:exp, inco)########################################
+@csrf_exempt
+@login_required
+def home(request):
+    if request.method == 'POST':
+        return HttpResponse('POST')
+    else:
+        return render(request, 'add.html')
+###############################################logout##############################################
+@csrf_exempt
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('login')
