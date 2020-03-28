@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Login / Sign up form + Material Design input boxes (CSS only)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+{% if token  %}
+<h1 style="text-align : center; color : #4AA9CD; margin: 0;">{{token}}</h1>
+{% endif %}
+{% if error  %}
+<h1 style="text-align : center; color : #4AA9CD; margin: 0;">{{error}}</h1>
+{% endif %}
+<div class="wrapper">
+  <div class="card">
+    <div class="card__top"></div>
+    <div class="card__content">
+      <div class="card__tab">
+        <input class="card__tab-input" id="tab-1" type="radio" name="card-tab" checked="checked"/>
+        <label class="card__tab-label" for="tab-1">Already member?</label>
+        <div class="card__tab-inner">
+          <form class="" action="{% url 'login' %}" method="POST">
+          <div class="card__form">
+            <div class="card__input-group">
+              <input class="card__input-group-input" type="text" name = "username" required="required"/>
+              <label class="card__input-group-label">Username</label>
+            </div>
+            <div class="card__input-group">
+              <input class="card__input-group-input" type="password" name = "password" required="required"/>
+              <label class="card__input-group-label">Password</label>
+              <button class="card__view-password"></button>
+            </div>
+            <div class="card__btn-group">
+              <input class="card__btn" value="log in" type="submit"></input>
+            </div><a class="card__link" href="#">Forgot password?</a>
+          </div>
+        </form>
+        </div>
+      </div>
+      <div class="card__tab">
+        <input class="card__tab-input" id="tab-2" type="radio" name="card-tab"/>
+        <label class="card__tab-label" for="tab-2">New member?</label>
+        <div class="card__tab-inner">
+         <form class="" action="{% url 'signup' %}" method="POST">
+          <div class="card__form">
+            <div class="card__input-group">
+              <input class="card__input-group-input" type="text" name = "username" required="required"/>
+              <label class="card__input-group-label">Username</label>
+            </div>
+            <div class="card__input-group">
+              <input class="card__input-group-input" type="password" name = "password"  required="required"/>
+              <label class="card__input-group-label">Password</label>
+              <button class="card__view-password"></button>
+            </div>
+            <div class="card__input-group">
+              <input class="card__input-group-input" type="password" name = "password-retype" required="required"/>
+              <label class="card__input-group-label">Password-Retype</label>
+              <button class="card__view-password"></button>
+            </div>
+            <div class="card__btn-group">
+              <input type="submit" value="register" class="card__btn"></input>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script  src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

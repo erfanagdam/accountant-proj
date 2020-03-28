@@ -1,86 +1,229 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<!doctype html>
+<html lang="en" dir="rtl">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+
+    <!-- Bootstrap core CSS -->
+
+<link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="blog.rtl.css" rel="stylesheet">
   </head>
   <body>
+    <div class="container">
+  <header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-4 pt-1">
+        <a class="btn btn-sm btn-outline-danger disabled"href="#">accountant</a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="btn btn-sm btn-outline-danger disabled" style="color:#EC6862; font-weight:500;" href="#">{{username}}</a>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <a class="btn btn-sm btn-outline-secondary" href="javascript:{document.getElementById('logout').submit()}">logout</a>
+          <form id = "logout" action="{% url 'logout' %}" method="POST">
+            <input type="hidden">
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  </header>
 
 
-  <canvas id="myChart" width="300" height="300"></canvas>
+
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <div class="row">
+
+    <div class="col-6 ">
+      <canvas id="myChart" width="200" height="200"></canvas>
+    </div>
+    <div class="col-6 ">
+      <canvas id="pieChart" width="150" height="150"></canvas>
+    </div>
+   </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+        <div class="card-body d-flex flex-column align-items-start">
+          <strong class="d-inline-block mb-2 text-warning">expence</strong>
+          <form action="{% url 'home' %}" method="POST">
+            <div class="form-group">
+              <input type="text" name = "expent" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter expent name">
+            </div>
+            <div class="form-group">
+              <input type="number" name = "amount1" class="form-control" id="exampleInputPassword1" placeholder="Enter expent amount">
+            </div>
+            <div class="form-group">
+              <input type="text" name = "date1" class="form-control" id="exampleInputPassword1" placeholder="date :  example : 1388-02-01">
+            </div>
+            <input type="submit" value="Add" class="btn btn-primary"></input>
+          </form>
+        </div>
+        <svg class="bd-placeholder-img card-img-right flex-auto d-none d-lg-block" width="200" height="280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect fill="#55595c" width="100%" height="100%"/><text fill="#eceeef" dy=".3em" x="50%" y="50%">Thumbnail</text></svg>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+        <div class="card-body d-flex flex-column align-items-start">
+          <strong class="d-inline-block mb-2 text-success">income</strong>
+          <form action="{% url 'home' %}" method="POST">
+            <div class="form-group">
+              <input type="text" name = "income"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter income name">
+            </div>
+            <div class="form-group">
+              <input type="number"  name = "amount2" class="form-control" id="exampleInputPassword1" placeholder="Enter income amount">
+            </div>
+            <div class="form-group">
+              <input type="text" name = "date2" class="form-control"  placeholder="date :  example : 1388-02-01">
+            </div>
+            <input type="submit" value="Add" class="btn btn-primary"></input>
+          </form>
+        </div>
+        <svg class="bd-placeholder-img card-img-right flex-auto d-none d-lg-block" width="200" height="280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect fill="#55595c" width="100%" height="100%"/><text fill="#eceeef" dy=".3em" x="50%" y="50%">Thumbnail</text></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8 blog-main">
+
+    </div><!-- /.blog-main -->
 
 
-    {% if user.is_authenticated %}
-    <a href="javascript:{document.getElementById('logout').submit()}" style=" direction: ltr; "><b style="color : red;">logout</b></a>
-    <form id ="logout" action="{% url 'logout' %}" method="POST">
-      <input type="hidden">
-    </form>
-    {% endif %}
-    <form class="" action="{% url 'home' %}" method="POST">
-      <p style="">expent :</p>
-      <input style="" type="text" name="expent" value="">
-      </input>
-      <p style="">amount :</p>
-      <input style="" type="number" name="amount" value="">
-      </input>
-      <br><br>
-      <input type="submit" name="submit" value="Add">
-      </input>
-    </form>
-      <hr>
-    <form class="" action="{% url 'home' %}" method="POST">
-      <p style="">income :</p>
-      <input style="" type="text" name="income" value="">
-      </input>
-      <br><br>
-      <p style="">amount :</p>
-      <input style="" type="number" name="amount" value="">
-      </input>
-      <br><br>
-      <input type="submit" name="submit" value="Add">
-      </input>
-    </form>
-  </body>
+      <div class="p-3">
+        <h4 class="font-italic">Archives</h4>
+        <ol class="list-unstyled mb-0">
+          <li><a href="#">March 2014</a></li>
+          <li><a href="#">February 2014</a></li>
+          <li><a href="#">January 2014</a></li>
+          <li><a href="#">December 2013</a></li>
+          <li><a href="#">November 2013</a></li>
+          <li><a href="#">October 2013</a></li>
+          <li><a href="#">September 2013</a></li>
+          <li><a href="#">August 2013</a></li>
+          <li><a href="#">July 2013</a></li>
+          <li><a href="#">June 2013</a></li>
+          <li><a href="#">May 2013</a></li>
+          <li><a href="#">April 2013</a></li>
+        </ol>
+      </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-  <script>
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          }
-      }
-  });
-  </script>
+      <div class="p-3">
+        <h4 class="font-italic">Elsewhere</h4>
+        <ol class="list-unstyled">
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ol>
+      </div>
+    </aside><!-- /.blog-sidebar -->
 
+  </div><!-- /.row -->
+
+</main><!-- /.container -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" ></script>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script>
+var ctx = document.getElementById('pieChart').getContext('2d');
+var pieChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['expent','income'],
+        datasets: [{
+            label: '# of Votes',
+            data: [{{expent}}, {{income}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgb(79, 168, 69, 0.2)',
+
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgb(79, 168, 69, 1)',
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.2/dist/js/bootstrap.bundle.js"></script></body>
 </html>
