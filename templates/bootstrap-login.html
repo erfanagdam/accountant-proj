@@ -49,13 +49,12 @@
         <form class="form-signin" method="POST" action="{% url 'login' %}">
           {%load static%}
           <img class="mb-4" src="{% static 'static-temps/calcu.png' %}" alt="" width="180" height="180">
-          <h1 class="h3 mb-3 font-weight-normal"> Sign up</h1>
-          <input type="text" class="form-control" name = "username" placeholder="username"  autocomplete="off" required >
-          <input type="password"  class="form-control" name = "password" placeholder="Password"  autocomplete="off" required>
-          <input type="password"  class="form-control" name = "password-retype" placeholder="Retype-Password"  autocomplete="off" required>
+          <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+          <input type="text" class="form-control" name = "username" placeholder="username" required >
+          <input type="password"  class="form-control" name = "password" placeholder="Password" required>
           <div class="checkbox mb-3">
             <br>
-          <input class="btn btn-lg btn-primary btn-block" type="submit" value="signup"></input>
+          <input class="btn btn-lg btn-primary btn-block" type="submit" value="login"></input>
           <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
         </form>
     </div>

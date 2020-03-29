@@ -8,6 +8,7 @@ from django.utils.crypto import get_random_string
 from .models import token, exp, income
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum
+from jdatetime import datetime, timedelta
 
 
 ###############################################signup##############################################
@@ -26,11 +27,11 @@ def signup(request):
                 token_create.user = request.user
                 token_create.token = user_token
                 token_create.save()
-                return render(request, 'index.html', {'token' : user_token })
+                return render(request, 'bootstrap-signup.html', {'token' : user_token })
         else:
-            return render(request, 'index.html', {'error' : 'pass match error'})
+            return render(request, 'bootstrap-signup.html', {'error' : 'pass match error'})
     else:
-        return render(request, 'index.html')
+        return render(request, 'bootstrap-signup.html')
 ###############################################login##############################################
 @csrf_exempt
 def login(request):
@@ -40,13 +41,37 @@ def login(request):
                 auth.login(request, user)
                 return redirect('home')
             else:
-                return render(request, "index.html", {'error':'password failure!'})
+                return render(request, "bootstrap-login.html", {'error':'password failure!'})
     else:
-        return render(request, "index.html")
+        return render(request, "bootstrap-login.html")
 #######################################home(ADD:exp, inco)########################################
 @csrf_exempt
 @login_required(login_url='/login/')
 def home(request):
+    current_month = datetime.now()  #TODO current is today not month fix this
+    last_month = datetime.today() - timedelta(days=30)
+    print(last_month)
+    labels= []
+    data = []
+    queryset = exp.objects.filter(date__gt = last_month).order_by('-amount')[:6]
+    for temp in queryset:
+        labels.append(temp.title)
+        data.append(temp.amount)
+
+    USER = request.user
+    INCOME = income.objects.filter(date__gt = last_month, user = USER).aggregate(Count('amount'), Sum('amount'))
+    EXPENT = exp.objects.filter(date__gt = last_month, user = USER).aggregate(Count('amount'), Sum('amount'))
+    expSum = EXPENT['amount__sum']
+    incoSum = INCOME['amount__sum']
+    exp_per = 0
+    inco_per = 0
+    if EXPENT['amount__count'] is not 0 and EXPENT['amount__sum'] is not None and INCOME['amount__count'] is not 0 and INCOME['amount__sum'] is not None:
+        exp_per = ((EXPENT['amount__sum'])*100)/INCOME['amount__sum']
+        inco_per = (100 - exp_per)
+    statExpense = exp.objects.order_by('-date')
+    statIncome = income.objects.order_by('-date')
+
+
     if request.method == 'POST':
         if request.POST.get('expent') and request.POST.get('amount1') and request.POST.get('date1'):
             expent = exp()
@@ -64,18 +89,12 @@ def home(request):
             inco.user = request.user
             inco.save()
             return redirect('home')
+        elif request.POST.get('T-date'):
+            statExpense = exp.objects.filter(date__gt = request.POST.get('T-date'))
+            statIncome = income.objects.filter(date__gt = request.POST.get('T-date'))
+            return render(request, 'add.html', {'username' : request.user, 'labels': labels, 'data' : data, 'expSum' : expSum, 'incoSum' : incoSum, 'expent' : exp_per, 'income' : inco_per, 'expStat' : statExpense, 'incoStat' : statIncome})
     else:
-        USER = request.user
-        INCOME = income.objects.filter(user = USER).aggregate(Count('amount'), Sum('amount'))
-        EXPENT = exp.objects.filter(user = USER).aggregate(Count('amount'), Sum('amount'))
-        exp_per = 0
-        inco_per = 0
-        if EXPENT['amount__count'] is not 0 and EXPENT['amount__sum'] is not None and INCOME['amount__count'] is not 0 and INCOME['amount__sum'] is not None:
-            exp_per = ((EXPENT['amount__sum'])*100)/INCOME['amount__sum']
-            inco_per = (100 - exp_per)
-
-        #stat = {'expent':EXPENT, 'income':INCOME}
-        return render(request, 'add.html', {'username' : request.user ,'expent': exp_per, 'income': inco_per})
+        return render(request, 'add.html', {'username' : request.user, 'labels': labels, 'data' : data, 'expSum' : expSum, 'incoSum' : incoSum, 'expent' : exp_per, 'income' : inco_per, 'expStat' : statExpense, 'incoStat' : statIncome})
 ###############################################logout##############################################
 @csrf_exempt
 def logout(request):
