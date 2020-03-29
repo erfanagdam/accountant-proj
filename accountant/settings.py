@@ -12,15 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-load_dotenv()
 
-# OR, the same with increased verbosity
-load_dotenv(verbose=True)
-
-# OR, explicitly providing path to '.env'
-  # python3 only
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
 
 
 
@@ -33,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@&1#4+p3a3^1-i!+b*o(ta_2ewo^7$+6tch&5ucb)xk+2_cexd'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,24 +80,6 @@ WSGI_APPLICATION = 'accountant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'fpowptbz',
-        #'USER': 'fpowptbz',
-        #'PASSWORD' : 'kKJZQ2doRZdm34uY4ropIBtvwXJm486k',
-        #'HOST': 'motty.db.elephantsql.com',
-        #'PORT': '5432',
-    #}
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'accountantproj',
-        'USER': 'postgres',
-        'PASSWORD' : 'erfan1378329',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 
 # Password validation
@@ -153,8 +127,3 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
-SENDGRID_SANDBOX_MODE_IN_DEBUG=True
-SENDGRID_ECHO_TO_STDOUT=True
